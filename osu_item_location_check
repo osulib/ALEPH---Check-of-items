@@ -1,0 +1,133 @@
+!This setting is used by items_location_check.pl script
+!for checking proper item statuses ang call numbers in particular collections
+!It should be located in $data_tab of the ADM Library
+!The script items_location_check.pl checks the collections listed here if they not contain
+!item statuses and/or range of call numbers that did not confirm to this setting
+!By Matyas Bajger, University of Ostrava, Library, matyas.bajger@osu.cz, library.osu.eu, knihovna.osu.cz
+!November 2015
+!
+!PART I - GENERAL PARAMETERS - LINES STARTING WITH CHAR  @
+!item process statuses that should be omitted from check (separate more by commas) 
+!By default (if nothing set up/empty string), all process statuses are omitted from check
+@omit_process_statuses=
+!send results to e-mail (address where html file with results might be send, leave empty for no mailing)
+@mail_results=matyas.bajger@osu.cz
+!DNS/IP of your Oracle (default: localhost - in the same machine as ALEPH)
+@oracle_address=localhost
+!
+!
+!PART II - DEFINITION OF ALLOWED ITEMS
+!
+!Columns:
+! 1 = collection, use '?' for right matches that contain portions of words, example: STOR* wil match STOR1, STOR2, STORx etc.
+! 2 = item status - allowed item status for the collection. For more statuses, write more lines. Leave empty not to check status (check call numbers only)
+! 3 = call number FROM - start of allowed range
+! 4 = call number TO - end of allowed range. If both columns 3,4 are empty, no check of call numbers is performed
+! 5 = Item Material Type (z30_material). Leave empty not to check material
+! 6 = Item barcode FROM. Only first 15 chars of barcode are checked (ALEPH definition is max. 30 chars for barcodes)
+! 7 = Item barcode TO
+!
+!1    2  3                 4                 5     6               7
+!!!!! !! !!!!!!!!!!!!!!!!! !!!!!!!!!!!!!!!!! !!!!! !!!!!!!!!!!!!!! !!!!!!!!!!!!!!!
+!example settings
+!Studyrooms collections named STUD1, STUDA, STUDg etc. can have only on-site or short-term loans = items statuses 0,1
+STUD* 01
+STUD* 02
+!Closed stacks have offsite loans only (item_status 03) and yeach of them have a certain range of call-nos.
+!   Only BOOK item material is allowed for call-no series A
+DEP1  03 A                 A5000             BOOK
+DEP1  03 B                 B7000
+DEP2  03 A5001             A9999999999999999 BOOK
+DEP2  03 B7001             B9999999999999999
+!Collection DEPM is designated for bounded serials only, with call-no series M* and item_status 01
+DEPM  01 M                 M9999999999999999 ISSBD
+!
+!realna data pro osu
+!
+PUJS4 05 A7301             A9999999999999999
+PUJS4 05 AS                AS999999999999999
+PUJS4 05 M                 M9999999999999999
+PUJS4 05 O                 O9999999999999999
+PUJS4 05 P                 P9999999999999999
+PUJS4 05 S                 S9999999999999999
+PUJS4 05 U0000000000000000 U9999999999999999
+PUJS4 05 UC000000000000000 UC999999999999999
+!status 06 od 1.12.2016 zrusen
+!PUJS4 06 U0000000000000000 U9999999999999999
+!PUJS4 06 UC000000000000000 UC999999999999999
+PUJS4 14
+PUJS5 05 A                 A7300
+PUJS5 05 B47461            B9999999999999999
+PUJS5 05 C21050            C9999999999999999
+PUJS5 14
+PUJS6 05 B                 B47460
+PUJS6 05 C                 C21049
+PUJS6 14
+!studovny
+MEDHO 07 A                 UC999999999999999
+MEDHO 08 A                 UC999999999999999
+MEDHO 16 G                 G9999999999999999
+MEDIO 08 A                 UC999999999999999
+MEDIO 13 A                 UC999999999999999
+MEDIO 16
+MEDIO 20 C                 C99 
+STC   08 A                 UC999999999999999
+STC   12 D                 D9999999999999999
+STC   13 A                 UC999999999999999
+STC   14
+STC   15 K                 K9999999999999999
+STC-S 17 VM                VM999999999999999
+!u starsich jsou i radova prir.c. YY00NNNNNNN
+!STC-S 18 D                 D9999999999999999 ISSBD 0007000000      0007999999
+STC-S 18 D                 D9999999999999999 ISSBD
+STC-S 18 D                 D9999999999999999 ISSUE
+STC-S 18 VMC               VMC99999999999999   
+STCHF 08 A                 UC999999999999999
+STFF  08 A                 UC999999999999999
+STFF  13 A                 UC999999999999999
+STFFG 08 A                 UC999999999999999
+STFFG 13 A                 UC999999999999999
+STFFM 08 K                 K9999999999999999
+STFFM 08 O                 OZ999999999999999
+STFFM 08 S                 S9999999999999999
+STFFM 13 K                 K9999999999999999
+STFFM 16 K                 UC999999999999999 AUDIO
+STFFR 08 A                 UC999999999999999
+STFFR 13 A                 UC999999999999999
+STFFR 15 A                 UC999999999999999
+STFSS 08 A                 UC999999999999999
+STFSS 13 A                 UC999999999999999
+STLF  08 A                 UC999999999999999
+STLF  13 A                 UC999999999999999
+STLF  15 A                 UC999999999999999
+STPSS 08 A                 UC999999999999999
+STPSS 13 A                 UC999999999999999
+STPSD 15 A                 UC999999999999999
+STPRH 08 A                 UC999999999999999
+STPRH 13 A                 UC999999999999999
+STFU  08 A                 UC999999999999999
+!katedrovky
+FF*   01 A                 UZZZZZZZZZZZZZZZZ
+FF*   01 VN                ZZZZZZZZZZZZZZZZZ
+FF*   12 D                 D9999999999999999
+FSSP  01 A                 UC999999999999999
+FSSP  12 D                 D9999999999999999
+FUTDU 01 A                 UC999999999999999
+FUTDU 12 D                 D9999999999999999
+FZ*   01 A                 UC999999999999999
+FZ*   12 D                 D9999999999999999
+OPP   01 A                 UC999999999999999
+OPP   12 D                 D9999999999999999
+PDF*  01 A                 UC999999999999999
+PDF*  12 D                 D9999999999999999
+PRF*  01 A                 UC999999999999999
+PRF*  12 D                 D9999999999999999
+PYRAM 01 A                 UC999999999999999
+URS   01 A                 Z9999999999999999
+UVAFM 01 A                 UC999999999999999
+UVAFM 12 D                 D9999999999999999
+!prirucni knihovny UK
+AKVIZ 03 A                 UC999999999999999
+EKOUK 03 A                 UC999999999999999
+KATAL 03 A                 UC999999999999999
+REDUK 03 A                 UC999999999999999
