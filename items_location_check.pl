@@ -233,9 +233,12 @@ my $datestring = strftime "%e.%m.%Y %H:%M:%S", localtime;
 print REPORT "<p><em>$datestring</em></p>\n";
 if ( scalar @report == 0 ) { print REPORT "<p>Everything's O.K.</p>\n";}
 else { 
+   #20210504 sort results
+   my @reportSorted = sort { $a->[2] cmp $b->[2] || $a->[3] cmp $b->[3] } @report;
    print REPORT '<table border="1">'."\n"; 
    print REPORT '<tr><th>Item key</th><th>Collection</th><th>Item status</th><th>Call No.</th><th>Material</th><th>Barcode</th>'."\n"; 
-   for my $line ( @report ) {
+   #20210504 sort results
+   for my $line ( @reportSorted ) {
       next if ((@$line[1] || '') eq '');
       print REPORT "   <tr>\n";
       print REPORT '      <td style="color:black;">'.(@$line[1] || '')."</td>\n";
